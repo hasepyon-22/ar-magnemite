@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.webrtc.ecl.ntt.com/skyway-latest.js"></script>
+  <title>SKyWay Tutorial</title>
+</head>
+<body>
+  <video id="my-video" width="400px" autoplay muted playsinline></video>
+  <p id="my-id"></p>
+
+  <textarea id="their-id"></textarea>
+  <button id=make-call>発信</button>
+  <video id="their-video"></video>
+</body>
+
+<script>
+  let localStream;
+
+  navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
+    const videoElm = document.getElementById('my-video');
+    videoElm.srcObject = stream;
+    videoElm.play();
+
+    localStream = stream;
+  }).catch(error => {
+    console.error('mediaDevice.getUserMedia() error:', error);
+    return
+  });
+
+  const peer = new Peer({
+    key: 'd7dde83e-c3d8-49bc-b367-f966fef1bf5c',
+    debug: 3
+  });
+
+  peer.on('open', () => {
+    document.getElementById('my-id').textContent = peer.id;
+  });
+
+  //発信処理
+  document.getElementById('make-call').onclick = () => {
+    const theirID = document.getElementById('their-id').value;
+    const mediaConnection = peer.call(theirID, localStream);
+    setEventListner(mediaConnection);
+  }
+
+  const setEventListner = mediaConnection => {
+    mediaConnection.on('stream', stream => {
+      const videoElm = document.getElementById('their-video')
+      videoElm.srcObject = stream;
+      videoElm.play();
+    });
+  }
+
+  //着信処理
+  peer.on('call', mediaConnection => {
+    mediaConnection.answer(localStream);
+    setEventListner(mediaConnection);
+  })
+
+</script>
+</html>
