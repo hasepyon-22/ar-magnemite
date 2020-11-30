@@ -19,9 +19,9 @@
 
     <p><span>自分のID :</span><span id="my-id"></span></p>
 
-    <!-- <video id="their-video" width="10px"></video> -->
-    <video id="my-video" width="10px" autoplay muted playsinline></video>
-    <audio id="their-video" autoplay></audio>
+    <video id="their-video" width="100px"></video>
+    <video id="my-video" width="100px" autoplay muted playsinline></video>
+    <!-- <audio id="their-video" autoplay></audio> -->
   </div>
 
   <a-scene embedded arjs>
@@ -39,7 +39,7 @@
   let localStream;
 
   //カメラ映像
-  navigator.mediaDevices.getUserMedia({ video: false, audio: true }).then(stream => {
+  navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
     //成功時にvideo要素にカメラをセットし、再生
     const videoElm = document.getElementById('my-video');
     videoElm.srcObject = stream;
