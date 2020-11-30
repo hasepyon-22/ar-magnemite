@@ -65,7 +65,7 @@
   //発信処理
   document.getElementById('make-call').onclick = () => {
     const theirID = document.getElementById('their-id').value;
-    const mediaConnection = peer.call(theirID);
+    const mediaConnection = peer.call(theirID, localStream);
     setEventListner(mediaConnection);
   }
 
