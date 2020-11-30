@@ -65,9 +65,7 @@
   //発信処理
   document.getElementById('make-call').onclick = () => {
     const theirID = document.getElementById('their-id').value;
-    const mediaConnection = peer.call(theirID, null, {
-      audioRecieveEnabled: true,
-    });
+    const mediaConnection = peer.call(theirID);
     setEventListner(mediaConnection);
   }
 
