@@ -4,15 +4,35 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.webrtc.ecl.ntt.com/skyway-latest.js"></script>
+
+  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+  <!-- we import arjs version without NFT but with marker + location based support -->
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  <link rel="stylesheet" href="style.css">
   <title>AR Call</title>
 </head>
-<body>
-  <video id="my-video" width="400px" autoplay muted playsinline></video>
-  <p id="my-id"></p>
 
-  <textarea id="their-id"></textarea>
-  <button id=make-call>発信</button>
-  <video id="their-video"></video>
+<body style="margin : 0px;">
+  <div class="dialogue">
+    <input placeholder="相手のID" id="their-id"></input>
+    <button id=make-call>発信</button>
+
+    <p><span>自分のID :</span><span id="my-id"></span></p>
+
+    <!-- <video id="their-video" width="10px"></video> -->
+    <video id="my-video" width="10px" autoplay muted playsinline></video>
+    <audio id="their-video" autoplay></audio>
+  </div>
+
+  <a-scene embedded arjs>
+    <a-marker preset="hiro">
+      <a-entity position="0 0 0" scale="0.05 0.05 0.05" gltf-model="./assets/patrick/patrick.gltf"></a-entity>
+    </a-marker>
+    <a-entity camera></a-entity>
+  </a-scene>
+
+
+
 </body>
 
 <script>
